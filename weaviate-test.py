@@ -52,7 +52,7 @@ class Pipeline:
             self.client = weaviate.Client("http://localhost:8081")#connection
             self.weaviate_client = weaviate.connect_to_local("localhost", "8081")#client
             logger.info("Connection to Weaviate successful!")
-            self.llm = ChatOllama(model="jonphi")
+            self.llm = ChatOllama(model="llama3")
             logger.info("Connection to Ollama successful")
         except Exception as e:
             logger.error(f"Error connecting to clients: {e}")
