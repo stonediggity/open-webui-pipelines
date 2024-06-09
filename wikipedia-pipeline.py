@@ -22,11 +22,13 @@ class Pipeline:
 
     async def on_startup(self):
         # This function is called when the server is started.
+        print("Start")
         print(f"on_startup:{__name__}")
         pass
 
     async def on_shutdown(self):
         # This function is called when the server is stopped.
+        print("Shutdown")
         print(f"on_shutdown:{__name__}")
         pass
 
