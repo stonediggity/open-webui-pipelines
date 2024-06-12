@@ -18,7 +18,7 @@ class Pipeline:
         self.name = "Wikipedia Pipeline"
 
         # Initialize rate limits
-        self.valves = self.Valves(**{"OPENAI_API_KEY": "sk-proj-lM9dWFpeG84jJw7Hq6d3T3BlbkFJQe9fGA7NgNJZwLcrNRuV"})
+        self.valves = self.Valves(**{"OPENAI_API_KEY": ""})
 
     async def on_startup(self):
         # This function is called when the server is started.
