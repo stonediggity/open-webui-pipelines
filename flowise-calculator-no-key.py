@@ -7,7 +7,7 @@ class Pipeline:
         pass  # No API key needed for Flowise API
 
     def __init__(self):
-        self.name = "Flowise Pipeline"
+        self.name = "Flowise Calculator Pipeline"
         self.valves = self.Valves()
 
     async def on_startup(self):
@@ -48,8 +48,10 @@ class Pipeline:
             r.raise_for_status()
 
             if body.get("stream"):
-                return r.iter_lines()
+                for line in r.iter_lines():
+                    yield line.decode('utf-8')
             else:
-                return r.json()
+                response_json = r.json()
+                return response_json.get("text", "No text in response")
         except Exception as e:
             return f"Error: {e}"
