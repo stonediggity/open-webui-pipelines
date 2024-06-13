@@ -52,6 +52,9 @@ class Pipeline:
                     yield line.decode('utf-8')
             else:
                 response_json = r.json()
-                return response_json.get("text", "No text in response")
+                # Raise an exception if "text" is not in the response
+                if "text" not in response_json:
+                    raise ValueError("No 'text' in the response")
+                return response_json["text"]
         except Exception as e:
             return f"Error: {e}"
