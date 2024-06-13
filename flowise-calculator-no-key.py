@@ -1,6 +1,7 @@
 from typing import List, Union, Generator, Iterator
 from pydantic import BaseModel
 import requests
+import json
 
 class Pipeline:
     class Valves(BaseModel):
@@ -35,7 +36,7 @@ class Pipeline:
             "question": user_message
         }
 
-        print(payload)
+        print("Payload:", payload)
 
         try:
             r = requests.post(
@@ -49,12 +50,23 @@ class Pipeline:
 
             if body.get("stream"):
                 for line in r.iter_lines():
-                    yield line.decode('utf-8')
+                    line_data = line.decode('utf-8')
+                    print("Line data:", line_data)
+                    # Parse the JSON line and extract the text part
+                    response_json = json.loads(line_data)
+                    if "text" in response_json:
+                        print("Streaming text:", response_json["text"])
+                        yield response_json["text"]
             else:
                 response_json = r.json()
-                # Raise an exception if "text" is not in the response
-                if "text" not in response_json:
-                    raise ValueError("No 'text' in the response")
-                return response_json["text"]
+                print("Response JSON:", response_json)
+                # Return only the "text" part of the response
+                if "text" in response_json:
+                    print("Text:", response_json["text"])
+                    return response_json["text"]
+                else:
+                    print("No text in response")
+                    return "No text in response"
         except Exception as e:
+            print("Error:", e)
             return f"Error: {e}"
