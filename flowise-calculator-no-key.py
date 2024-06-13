@@ -8,7 +8,7 @@ class Pipeline:
         pass  # No API key needed for Flowise API
 
     def __init__(self):
-        self.name = "Flowise Pipeline"
+        self.name = "Flowise Calculator Pipeline"
         self.valves = self.Valves()
 
     async def on_startup(self):
